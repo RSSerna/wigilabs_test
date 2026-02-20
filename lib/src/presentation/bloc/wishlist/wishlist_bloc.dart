@@ -25,6 +25,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     on<AddToWishlistEvent>(_onAddToWishlist);
     on<RemoveFromWishlistEvent>(_onRemoveFromWishlist);
     on<CheckIfCountryInWishlistEvent>(_onCheckIfCountryInWishlist);
+    on<ClearWishlistEvent>(_onClearWishlist);
   }
 
   Future<void> _onLoadWishlist(
@@ -77,6 +78,21 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     try {
       final isInWishlist = await isCountryInWishlistUsecase(event.countryCode);
       emit(CountryWishlistStatus(isInWishlist: isInWishlist));
+    } catch (e) {
+      emit(WishlistError(message: e.toString()));
+    }
+  }
+
+  Future<void> _onClearWishlist(
+    ClearWishlistEvent event,
+    Emitter<WishlistState> emit,
+  ) async {
+    try {
+      emit(const WishlistLoading());
+
+      await clearWishlistUsecase();
+
+      emit(const WishlistLoaded(items: []));
     } catch (e) {
       emit(WishlistError(message: e.toString()));
     }

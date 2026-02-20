@@ -1,3 +1,8 @@
+// Uncomment the following lines to reset the database on app startup. This is useful during development to ensure you have a clean slate each time you run the app. Be cautious when using this in production, as it will delete all user data in the wishlist.
+// import 'dart:io';
+// import 'package:path/path.dart' as p;
+// import 'package:path_provider/path_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +16,14 @@ import 'src/presentation/pages/wishlist_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupServiceLocator();
+
+  // Uncomment the following lines to reset the database on app startup. This is useful during development to ensure you have a clean slate each time you run the app. Be cautious when using this in production, as it will delete all user data in the wishlist.
+  // final dbFolder = await getApplicationDocumentsDirectory();
+  // final file = File(p.join(dbFolder.path, 'wigilabs_app.db'));
+  // if (await file.exists()) {
+  //   await file.delete();
+  // }
+
   runApp(const MyApp());
 }
 

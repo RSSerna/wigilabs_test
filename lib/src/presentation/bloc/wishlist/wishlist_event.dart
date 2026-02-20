@@ -25,3 +25,7 @@ class CheckIfCountryInWishlistEvent extends WishlistEvent {
 
   const CheckIfCountryInWishlistEvent({required this.countryCode});
 }
+
+class ClearWishlistEvent extends WishlistEvent {
+  const ClearWishlistEvent();
+}

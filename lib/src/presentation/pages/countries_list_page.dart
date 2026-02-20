@@ -54,14 +54,19 @@ class _CountriesListPageState extends State<CountriesListPage> {
               return const Center(child: CircularProgressIndicator());
             } else if (state is CountriesLoaded) {
               return ListView.builder(
+                // Performance optimizations to prevent jank
+                addRepaintBoundaries: true,
+                cacheExtent: 250.0,
                 itemCount: state.countries.length,
                 itemBuilder: (context, index) {
                   final country = state.countries[index];
-                  return CountryCard(
-                    country: country,
-                    isInWishlist: _countriesInWishlist.contains(country.code),
-                    onTap: () => _navigateToDetails(context, country),
-                    onWishlistToggle: () => _toggleWishlist(context, country),
+                  return RepaintBoundary(
+                    child: CountryCard(
+                      country: country,
+                      isInWishlist: _countriesInWishlist.contains(country.code),
+                      onTap: () => _navigateToDetails(context, country),
+                      onWishlistToggle: () => _toggleWishlist(context, country),
+                    ),
                   );
                 },
               );
